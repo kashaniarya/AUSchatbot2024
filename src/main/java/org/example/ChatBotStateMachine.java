@@ -11,30 +11,28 @@ public class ChatBotStateMachine {
 
         switch (currentState) {
             case START:
-                userInput = userInput.strip().toLowerCase();
+                userInput = userInput.strip();
+                userInput = userInput.toLowerCase();
                 if (userInput.equals("yes")) {
                     currentState = BotState.STATE1;
-                    return "Great! Here are the details.";
+                    return "Great! Here are the details. Pick 1, 2, or 3.";
                 }
                 else if (userInput.equals("no")) {
-
+                    currentState = BotState.END;
+                    System.out.println("bye");
+                    System.exit(0);
+                    return "Okay, bye.";
                 }
                 else {
-                    return "Sorry I didn't understand.";
+                    return "Sorry I didn't understand. Please try again.";
                 }
             case STATE1:
-                //currentState = BotState.ASK_AGE;
-                return "How old are you?";
-//            case ASK_AGE:
-//                // Handle age-related logic, ask further questions, etc.
-//                currentState = BotState.END;
-//                return "Thank you for chatting!";
-//            case END:
-//                // End state, reset or handle as needed
-//                currentState = BotState.START;
-//                return "Restarting the conversation. What's your name?";
+                currentState = BotState.END;
+                System.out.println("done");
+                System.exit(0);
+                return "";
             default:
-                return "Invalid state";
+                return "Invalid input. Try again.";
         }
     }
 }
