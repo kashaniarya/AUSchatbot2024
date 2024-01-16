@@ -23,10 +23,9 @@ public class ChatBotStateMachine {
                 }
                 // case 2 : if no
                 else if (userInput.equals("no")) {
-                    currentState = BotState.END;
-                    System.out.println("bye");
+                    System.out.println("Bye.");
                     System.exit(0);
-                    return "Okay, bye.";
+                    //return "";
                 }
                 // case 3 : if bad input
                 else {
@@ -41,8 +40,7 @@ public class ChatBotStateMachine {
 
                 // case 1 : user input 1,2, or 3
                 if (userInput.equals("1") || userInput.equals("2") || userInput.equals("3")) {
-                    currentState = BotState.END;
-                    System.out.println("done");
+                    System.out.println("DONE");
                     System.exit(0);
                 }
                 // case 2 : bad input
@@ -50,7 +48,7 @@ public class ChatBotStateMachine {
                     System.out.println("Sorry I didn't understand. Please try again.");
                     return "Here are the details. Pick 1, 2, or 3.";
                 }
-                return "";
+                //return "";
 
             // default State : dead state
             default:
