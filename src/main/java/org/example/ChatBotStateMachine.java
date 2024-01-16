@@ -25,7 +25,6 @@ public class ChatBotStateMachine {
                 else if (userInput.equals("no")) {
                     System.out.println("Bye.");
                     System.exit(0);
-                    //return "";
                 }
                 // case 3 : if bad input
                 else {
@@ -48,11 +47,10 @@ public class ChatBotStateMachine {
                     System.out.println("Sorry I didn't understand. Please try again.");
                     return "Here are the details. Pick 1, 2, or 3.";
                 }
-                //return "";
 
             // default State : dead state
             default:
-                return "Invalid input. Try again.";
+                return "Invalid/Dead State";
         }
     }
 }
