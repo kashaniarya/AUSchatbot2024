@@ -1,64 +1,67 @@
 package org.example;
 
-public class ChatBotStateMachine {
+import java.util.HashMap;
+import java.util.Map;
+
+class ChatBotStateMachine {
     private BotState currentState;
+    private Map<BotState, Map<String, BotState>> transitions;
 
     public ChatBotStateMachine() {
         currentState = BotState.START;
+        initializeTransitions();
+    }
+
+    private void initializeTransitions() {
+        transitions = new HashMap<>();
+
+        // Define transitions for START state
+        Map<String, BotState> startTransitions = new HashMap<>();
+        startTransitions.put("yes", BotState.STATE1);
+        startTransitions.put("no", null); // Represents an exit
+        transitions.put(BotState.START, startTransitions);
+
+        // Define transitions for STATE1 state
+        Map<String, BotState> state1Transitions = new HashMap<>();
+        state1Transitions.put("1", null); // Represents an exit
+        state1Transitions.put("2", null); // Represents an exit
+        state1Transitions.put("3", null); // Represents an exit
+        transitions.put(BotState.STATE1, state1Transitions);
     }
 
     public String processInput(String userInput) {
+        // Strip & lowercase user input
+        userInput = userInput.strip().toLowerCase();
 
+        // Get possible transitions for the current state
+        Map<String, BotState> possibleTransitions = transitions.get(currentState);
+
+        // Check if the user input corresponds to a valid transition
+        if (possibleTransitions != null && possibleTransitions.containsKey(userInput)) {
+            currentState = possibleTransitions.get(userInput);
+
+            if (currentState == null) {
+                // Represents an exit
+                System.out.println("Bye.");
+                System.exit(0);
+            }
+
+            // Handle state-specific logic here if needed
+
+            return getStateOutput();
+        } else {
+            System.out.println("Sorry, I didn't understand. Please try again.");
+            return getStateOutput();
+        }
+    }
+
+    private String getStateOutput() {
+        // Customize output based on the current state if needed
         switch (currentState) {
-            // Start STATE
             case START:
-                // strip & lowercase user input
-                userInput = userInput.strip();
-                userInput = userInput.toLowerCase();
-
-                // case 1 : if yes
-                if (userInput.equals("yes")) {
-                    currentState = BotState.STATE1;
-                    return "Great! Here are the details. Pick 1, 2, or 3.";
-                }
-                // case 2 : if no
-                else if (userInput.equals("no")) {
-                    System.out.println("Bye.");
-                    System.exit(0);
-                    //return "";
-                }
-                // case 3 : if bad input
-                else {
-                    System.out.println("Sorry I didn't understand. Please try again.");
-                    return "Do you want to hear about a newly available shift?";
-                }
-
-            // STATE 1 : Shift Details plus Question 1,2,3
+                return "Do you want to hear about a newly available shift?";
             case STATE1:
-                // strip user input
-                userInput = userInput.strip();
-
-                // case 1 : user input 1,2, or 3
-                if (userInput.equals("1")) {
-                    System.out.println("DONE1");
-                    System.exit(0);
-                }
-                else if (userInput.equals("2")) {
-                    System.out.println("DONE2");
-                    System.exit(0);
-                }
-                else if (userInput.equals("3")) {
-                    System.out.println("DONE3");
-                    System.exit(0);
-                }
-                // case 2 : bad input
-                else {
-                    System.out.println("Sorry I didn't understand. Please try again.");
-                    return "Here are the details. Pick 1, 2, or 3.";
-                }
-                //return "";
-
-            // default State : dead state
+                return "Here are the details. Pick 1, 2, or 3.";
             default:
                 return "Invalid input. Try again.";
         }
