@@ -1,0 +1,13 @@
+enum BotState {
+  START
+  STATE1
+}
+
+type ChatBotStateMachine {
+  currentState: BotState
+  processInput(userInput: String): String
+}
+
+type Query {
+  getInitialState: ChatBotStateMachine
+}
