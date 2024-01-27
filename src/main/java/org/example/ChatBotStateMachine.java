@@ -39,8 +39,16 @@ public class ChatBotStateMachine {
                 userInput = userInput.strip();
 
                 // case 1 : user input 1,2, or 3
-                if (userInput.equals("1") || userInput.equals("2") || userInput.equals("3")) {
-                    System.out.println("DONE");
+                if (userInput.equals("1")) {
+                    System.out.println("DONE1");
+                    System.exit(0);
+                }
+                else if (userInput.equals("2")) {
+                    System.out.println("DONE2");
+                    System.exit(0);
+                }
+                else if (userInput.equals("3")) {
+                    System.out.println("DONE3");
                     System.exit(0);
                 }
                 // case 2 : bad input
